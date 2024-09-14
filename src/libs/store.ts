@@ -3,7 +3,7 @@ import { persist } from "zustand/middleware";
 
 import { IProduct } from "./types";
 
-interface Store {
+interface ProductStore {
   data: {
     products: IProduct[];
     total: number;
@@ -12,7 +12,12 @@ interface Store {
   removeProduct: (id: React.Key) => void;
 }
 
-export const useProductStore = create<Store>()(
+interface ModalStore {
+  open: boolean;
+  setOpen: (open: boolean) => void;
+}
+
+export const useProductStore = create<ProductStore>()(
   persist(
     (set) => ({
       data: {
@@ -35,3 +40,8 @@ export const useProductStore = create<Store>()(
     }
   )
 );
+
+export const useModalStore = create<ModalStore>()((set) => ({
+  open: false,
+  setOpen: (open: boolean) => set({ open }),
+}));

@@ -8,11 +8,12 @@ import Meta from "antd/es/card/Meta";
 import DataTable from "../components/ui/table";
 
 import { fetchProducts } from "../libs/api";
-import { useProductStore } from "../libs/store";
+import { useModalStore, useProductStore } from "../libs/store";
 
 const Comparison = () => {
-  const [open, setOpen] = useState(false);
+  const { open, setOpen } = useModalStore();
   const { data, removeProduct } = useProductStore();
+
   const [pagination, setPagination] = useState({
     current: 1,
     pageSize: 10,
@@ -49,7 +50,7 @@ const Comparison = () => {
         />
       </Modal>
 
-      <div className="grid gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-4">
+      <div className="overflow-auto grid gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-4">
         {data.products.map((item) => (
           <Card
             key={item.id}

@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import type { TableColumnsType, TableProps } from "antd";
 import { Button, Table } from "antd";
 
-import { useProductStore } from "../../libs/store";
+import { useModalStore, useProductStore } from "../../libs/store";
 import { DataTableProps, IProduct } from "../../libs/types";
 
 const DataTable = ({
@@ -14,6 +14,8 @@ const DataTable = ({
   setPagination,
 }: DataTableProps) => {
   const navigate = useNavigate();
+
+  const { setOpen } = useModalStore();
   const { data: storeData, addProduct: setProducts } = useProductStore();
 
   const columns: TableColumnsType<IProduct> = [
@@ -75,6 +77,7 @@ const DataTable = ({
           }
           onClick={(e) => {
             e.preventDefault();
+            setOpen(false);
             setProducts([...storeData.products, record]);
             navigate("/compare");
           }}
